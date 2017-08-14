@@ -1,0 +1,76 @@
+#Go for Network Ops
+Writing a Caddy Plugin
+Go Reston Meetup
+18:30 16 Aug 2017
+Tags: golang, reston, caddy
+
+James Boswell
+https://github.com/jamesboswell
+jim@jimboswell.net
+@jimb on gophers slack
+https://invite.slack.golangbridge.org/
+
+* Problem Statement
+- An older RHEL 6 system with old Apache 2.2 
+- Could only do TLS 1.0 want to get to TLS 1.2︎
+- No easy access to new packages for internal reasons
+- Didn't want to hand compile Apache and mods and dive into dependency hell
+
+*Requirements*
+- HTTP Basic Authentication done with RADIUS using mod_auth_xradius
+- Not possible to change authentication protocol
+
+.image pkg.png
+Ignoring the RADIUS module...
+We can fix TLS by just upgrading OpenSSL... easy right?
+
+* OpenSSL upgrade....
+OpenSSL upgrade via an RPM made things even worse... *Heartbleed*
+.image heartbleed.png _ 300
+I tried an RPM for OpenSSL 1.0.1e and it was bad...bad.
+ *...lesson* *learned*.
+
+* Options
+- Looked for more up to date repos/RPMs
+- Tried making my own RPMs from source
+
+*Not* *easy* or fun for a 7 year old operating system without access to fixes
+.image stars.png _ 125
+Research led me to *Caddy*
+- single statically linked binary (no external dependencies!)
+- up to date TLS implementation
+- written in *Go*!
+
+
+
+
+* What is Caddy?
+Caddy is an open source, HTTP/2-enabled web server written in Go. It uses the Go standard library for its HTTP functionality.
+
+One of Caddy's most notable features is enabling HTTPS by default (Let's Encrypt). It is the first general-purpose web server to do so without requiring extra configuration.
+
+The author, Matt Holt, began developing Caddy in December 2014 and released it in April 2015.
+
+
+# .image gopherbw.png _ 250
+.image caddy-web-server-black.png
+.caption [Out of Order[https://caddyserver.com]]
+
+* Ok, so Caddy is awesome... but no RADIUS support 🙁
+- How do we replace *mod_auth_xradius*??
+-- What does it do?
+.image mod_auth_xradius.png
+.caption [[http://www.outoforder.cc/projects/httpd/mod_auth_xradius/]]
+
+
+* What is RADIUS?
+Remote Authentication Dial-In User Service (RADIUS) is a networking protocol that provides centralized Authentication, Authorization, and Accounting (AAA or Triple A)
+
+Relatively simple protocol
+.image radius.png
+: Remote Authentication Dial-In User Service (RADIUS) is a networking protocol that provides centralized Authentication, Authorization, and Accounting (AAA or Triple A)
+
+* caddy-radius
+further text
+.code radius.go
+.image run.png
