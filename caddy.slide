@@ -47,21 +47,23 @@ Research led me to *Caddy*
 * What is Caddy?
 Caddy is an open source, HTTP/2-enabled web server written in Go. It uses the Go standard library for its HTTP functionality.
 
+Matt Holt, began developing Caddy in December 2014 and released it in April 2015.
+
 One of Caddy's most notable features is enabling HTTPS by default (Let's Encrypt). It is the first general-purpose web server to do so without requiring extra configuration.
 
-The author, Matt Holt, began developing Caddy in December 2014 and released it in April 2015.
+\...and it's highly *customizable* with *plugins*
 
 
 # .image gopherbw.png _ 250
 .image caddy-web-server-black.png
-.caption [Out of Order[https://caddyserver.com]]
+.caption [[https://caddyserver.com]]
 
-* Ok, so Caddy is awesome... but no RADIUS support 🙁
-- How do we replace *mod_auth_xradius*??
--- What does it do?
+* Ok, so Caddy is awesome... but no RADIUS plugin 🙁
+- Need to replace *mod_auth_xradius*, what does mod_auth_xradius do?
 .image mod_auth_xradius.png
 .caption [[http://www.outoforder.cc/projects/httpd/mod_auth_xradius/]]
-
+Not using the memcache feature
+So at a *minimum*: we need a Caddy plugin to speak RADIUS and have a local user cache
 
 * What is RADIUS?
 Remote Authentication Dial-In User Service (RADIUS) is a networking protocol that provides centralized Authentication, Authorization, and Accounting (AAA or Triple A)
