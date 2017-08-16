@@ -1,0 +1,15 @@
+localhost:2015 {
+  log / stdout "{combined}"
+  errors stderr
+
+  root /Users/jboswell/new_site
+
+  radiusauth {
+          server 127.0.0.1:1812 127.0.0.1:9012
+          secret testing123
+          realm  "RADIUS Auth"
+          except /public /img
+          cache  .
+          cachetimeout 1
+  }
+}
